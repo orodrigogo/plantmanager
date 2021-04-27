@@ -1,6 +1,9 @@
 import React from 'react';
 import  { createStackNavigator } from '@react-navigation/stack';
 
+import { enableScreens } from 'react-native-screens';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+
 import { Welcome } from '../pages/Welcome';
 import { UserIdentification } from '../pages/UserIdentification';
 import { Confirmation } from '../pages/Confirmation';
@@ -10,7 +13,11 @@ import { MyPlants } from '../pages/MyPlants';
 import colors from '../styles/colors';
 import AuthRoutes from './tab.routes';
 
-const stackRoutes = createStackNavigator();
+enableScreens();
+
+const stackRoutes = createSharedElementStackNavigator();
+// const stackRoutes = createStackNavigator();
+
 
 const AppRoutes: React.FC = () => (
     <stackRoutes.Navigator
@@ -44,6 +51,17 @@ const AppRoutes: React.FC = () => (
         <stackRoutes.Screen 
             name="PlantSave"
             component={PlantSave}
+            sharedElementsConfig = {(route) => {
+                const { plant } = route.params
+                return [
+                    {
+                        id: `item.${plant.id}.image`,
+                        animation: 'move',
+                        resize: 'clip',
+                        align: 'center-top'
+                    },
+                ]
+            }}
         />
 
         <stackRoutes.Screen 

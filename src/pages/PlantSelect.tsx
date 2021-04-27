@@ -18,13 +18,14 @@ import api from '../services/api';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { SharedElement } from 'react-navigation-shared-element';
 
 interface EnviromentProps {
     key: string;
     title: string;
 }
 
-export function PlantSelect(){
+function PlantSelect(){
     const [enviroments, setEnvirtoments] = useState<EnviromentProps[]>([]);
     const [plants, setPlants] = useState<PlantProps[]>([]);
     const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
@@ -123,13 +124,13 @@ export function PlantSelect(){
                <FlatList 
                 data={enviroments}
                 keyExtractor={(item) => String(item.key)}
-                renderItem={({ item }) => (
+                renderItem={({ item }) => (                    
                     <EnviromentButton 
                         title={item.title}
                         active={item.key === enviromentSelected}
                         onPress={() => handleEnrivomentSelected(item.key)}
                         
-                    />
+                    />                    
                 )}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -141,11 +142,11 @@ export function PlantSelect(){
                <FlatList 
                 data={filteredPlants}
                 keyExtractor={(item) => String(item.id)}
-                renderItem={({ item }) => (
+                renderItem={({ item }) => (                    
                     <PlantCardPrimary 
                         data={item} 
                         onPress={() => handlePlantSelect(item)}
-                    />
+                    />                    
                 )}
                 showsVerticalScrollIndicator={false}
                 numColumns={2}   
@@ -165,6 +166,9 @@ export function PlantSelect(){
         </View>
     )
 }
+
+
+export { PlantSelect }
 
 const styles = StyleSheet.create({
     container: {

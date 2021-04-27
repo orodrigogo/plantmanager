@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Alert,
     StyleSheet,
@@ -21,6 +21,16 @@ import { Button } from '../components/Button';
 import waterdrop from '../assets/waterdrop.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { SharedElement } from 'react-navigation-shared-element';
+import Animated, { 
+    Easing, 
+    useAnimatedStyle, 
+    useSharedValue, 
+    withTiming, 
+    interpolate, 
+    Extrapolate,
+    withSequence 
+} from 'react-native-reanimated';
 
 interface Params {
     plant: PlantProps
@@ -32,6 +42,36 @@ export function PlantSave(){
 
     const route = useRoute();
     const { plant } = route.params as Params;
+
+    const titlePosition = useSharedValue(-200);
+
+    const buttonPosition = useSharedValue(100)
+    const buttonStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { translateY: buttonPosition.value }
+            ],
+            opacity: interpolate(
+                buttonPosition.value,
+                [100, 0], // numero minimo e maxi da animacao
+                [0, 1], // opacidade respectiva na posicao
+            Extrapolate.CLAMP // limita a opacidade de 0 ate 1
+            )
+        }
+    });
+
+    const titleStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { translateX: titlePosition.value },
+            ],
+            opacity: interpolate(
+                titlePosition.value,
+                [-200, 0],
+                [0, 1]
+            )
+        }
+    })
 
     const navigation = useNavigation();
 
@@ -73,6 +113,22 @@ export function PlantSave(){
         }
     }
 
+    useEffect(() => {       
+        buttonPosition.value =
+            withTiming(0, { 
+                duration: 700,
+                //para gerar cubic-bezier https://cubic-bezier.com/#.15,.75,.93,.54
+                easing: Easing.bounce
+            });
+        
+        titlePosition.value = 
+            withTiming(0, { 
+                duration: 700,
+                //para gerar cubic-bezier https://cubic-bezier.com/#.15,.75,.93,.54
+                easing: Easing.bounce
+            });
+    },[]);
+
     return ( 
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -80,15 +136,18 @@ export function PlantSave(){
         >
             <View style={styles.container}>
                 <View style={styles.plantInfo}>
-                    <SvgFromUri
-                        uri={plant.photo}
-                        height={150}
-                        width={150}
-                    />
+                    <SharedElement id={`item.${plant.id}.image`}>
+                        <SvgFromUri
+                            uri={plant.photo}
+                            height={150}
+                            width={150}
+                        />
+                    </SharedElement>
 
-                    <Text style={styles.plantName}>
+                    <Animated.Text style={[styles.plantName, titleStyle]}>
                     {plant.name}
-                    </Text>
+                    </Animated.Text>
+
                     <Text style={styles.plantAbout}>
                         {plant.about} 
                     </Text>
@@ -131,11 +190,13 @@ export function PlantSave(){
                         )
                     }
 
-
-                    <Button 
-                        title="Cadastrar planta"
-                        onPress={handleSave}
-                    />
+        
+                    <Animated.View style={buttonStyle}>
+                        <Button 
+                            title="Cadastrar planta"
+                            onPress={handleSave}
+                        />
+                    </Animated.View>
                 </View>
             </View>
         </ScrollView>

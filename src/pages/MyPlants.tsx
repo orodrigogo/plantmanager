@@ -18,11 +18,34 @@ import { pt } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
 import { Load } from '../components/Load';
+import Animated, { Extrapolate, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
     const [loading, setLoading] = useState(true);    
     const [nextWaterd, setNextWatered] = useState<string>();
+
+    const scrollY = useSharedValue(0);
+
+
+    const scrollHandler = useAnimatedScrollHandler(event => {
+        scrollY.value = event.contentOffset.y;
+        console.log(event.contentOffset.y)
+    });
+
+    const headerStyle = useAnimatedStyle(() => {
+        return {
+            height: interpolate(
+                scrollY.value,
+                [0, 130],
+                [200, 130],
+                Extrapolate.CLAMP
+            )
+        }
+    });
+
+    
+
 
     function handleRemove(plant: PlantProps) {
         Alert.alert('Remover', `Deseja remover a ${plant.name}?`,[
@@ -74,8 +97,16 @@ export function MyPlants() {
 
     return (
         <View style={styles.container}>
-            <Header/>
+            
 
+            <Animated.ScrollView
+                style={{ width: '100%'}}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingTop: 200 }}
+                onScroll={scrollHandler}
+                scrollEventThrottle={16} // 1000 / 60 = 16. (1 segundo / 60 que é a quantidade de frames por segundo para ter uma animação de 60 frames)
+            
+            >
             <View style={styles.spotlight}>
                 <Image 
                     source={waterdrop}
@@ -103,6 +134,11 @@ export function MyPlants() {
                     showsVerticalScrollIndicator={false}
                 />
             </View>
+            </Animated.ScrollView>
+
+            <Animated.View style={[styles.header, headerStyle]}>
+                <Header/>
+            </Animated.View>
         </View>
     )
     
@@ -116,6 +152,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 50,
         backgroundColor: colors.background
+    },
+    header: {
+        overflow: 'hidden',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        backgroundColor: colors.green_light,
+        paddingHorizontal: 30,
     },
     spotlight: {
      backgroundColor: colors.blue_light,

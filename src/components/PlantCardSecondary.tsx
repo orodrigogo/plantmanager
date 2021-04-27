@@ -70,6 +70,7 @@ export const PlantCardSecondary = ({ data, handleRemove, ...rest} : PlantProps) 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        height: 100,
         paddingHorizontal: 10,
         paddingVertical: 25,
         borderRadius: 20,
