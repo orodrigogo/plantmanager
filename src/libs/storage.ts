@@ -26,6 +26,16 @@ export interface StoragePlantProps {
 
 export async function savePlant(plant: PlantProps) : Promise<void> {
     try {
+        // Pedir permissão iOS.
+        await Notifications.requestPermissionsAsync({
+            ios: {
+              allowAlert: true,
+              allowBadge: true,
+              allowSound: true,
+              allowAnnouncements: true,
+            },
+         });
+        
         const nexTime = new Date(plant.dateTimeNotification);
         const now = new Date();
 
