@@ -1,10 +1,29 @@
+<h1 align="center">
+  <img alt="Plant Manager" title="Plant Manager" src=".github/logo.png" />
+</h1>
+
+<p align="center">
+  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=32B768&labelColor=000000">
+
+ <img src="https://img.shields.io/static/v1?label=NLW&message=05&color=32B768&labelColor=000000" alt="NLW 05" />
+</p>
+
+<br>
+
+<p align="center">
+  <img alt="Plant Manager" src=".github/plantmanager.png" width="100%">
+</p>
+
+
 ## 🪴 Plantmanager
 ![cover](capa.png?style=flat)
 
+
+## 💻 Projeto
 Aplicativo para lhe ajudar a lembrar de cuidar de suas plantas de forma fácil de acordo com cada tipo de plantinha.
 
 
-## User Stories
+## 👥 User Stories
 O João ganhou um vaso de flor e não sabe qual é o melhor lugar da casa para colocar/decorar. 
 João se questinou: será que essa platinha prefere ambiente externo? Sombra? Qual será a frequência ideal para regá-la? 
 
@@ -21,7 +40,7 @@ Ou seja, o App ajuda o João a cuidar com carinho das platinhas que ele tem na s
 -   [ ] Lembra o usuário quando regar e cuidar da plantinha de acordo com a frequência ideial das plantas que o usuário possui;
 
 
-## Tecnologias 
+## ✨ Tecnologias
 
 -   [ ] React Native
 -   [ ] Typescript
@@ -36,6 +55,11 @@ Ou seja, o App ajuda o João a cuidar com carinho das platinhas que ele tem na s
 -   [ ] React Navigation Stack e Bottom Tabs
 -   [ ] React Native Gesture Handler
 -   [ ] Json Server
+
+
+## 🔖 Layout
+
+Você pode visualizar o layout do projeto através [desse link](https://www.figma.com/file/IhQRtrOZdu3TrvkPYREzOy/PlantManager/duplicate). É necessário ter conta no [Figma](http://figma.com/) para acessá-lo.
 
 
 ## Executando o projeto
@@ -61,6 +85,10 @@ const api = axios.create({
 export default api;
 ```
 
+
+## 📄 Licença
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
 
 <div align="center">
