@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Plant Manager" title="Plant Manager" src=".github/logo.png" />
+  <img alt="Plant Manager" title="Plant Manager" src="logo.png" />
 </h1>
 
 <p align="center">
@@ -8,14 +8,7 @@
  <img src="https://img.shields.io/static/v1?label=NLW&message=05&color=32B768&labelColor=000000" alt="NLW 05" />
 </p>
 
-<br>
 
-<p align="center">
-  <img alt="Plant Manager" src=".github/plantmanager.png" width="100%">
-</p>
-
-
-## 🪴 Plantmanager
 ![cover](capa.png?style=flat)
 
 
